@@ -40,4 +40,5 @@ jobs:
         run: |
           terraform init
           terraform import aws_iam_role.lambda_exec lambda_exec_role
+          terraform import aws_lambda_function.cpf_authorization CpfAuthorizationFunction
           terraform apply -auto-approve
