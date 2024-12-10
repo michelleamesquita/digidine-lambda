@@ -36,7 +36,7 @@ jobs:
 
       # Terraform: Initialize and Apply
       - name: Terraform Init and Apply
-        working-directory: terraform
+        working-directory: .
         run: |
           terraform init
           terraform apply -auto-approve
