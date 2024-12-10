@@ -1,0 +1,16 @@
+   name: Protect Main Branch
+
+   on:
+     push:
+       branches:
+         - main
+         - master
+
+   jobs:
+     prevent-direct-commits:
+       runs-on: ubuntu-latest
+       steps:
+         - name: Check for direct commits
+           run: |
+             echo "Direct commits to main/master are not allowed. Please use a pull request."
+             exit 1
