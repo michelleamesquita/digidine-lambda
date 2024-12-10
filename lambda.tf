@@ -75,6 +75,9 @@ resource "aws_lambda_permission" "api_gateway" {
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_api_gateway_rest_api.api.execution_arn}/*/*"
 
+lifecycle {
+    ignore_changes = [statement_id]
+  }
 
 }
 
