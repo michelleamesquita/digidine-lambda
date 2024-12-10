@@ -65,9 +65,7 @@ resource "aws_api_gateway_integration" "integration" {
   integration_http_method = "POST"
   uri         = aws_lambda_function.cpf_authorization.invoke_arn
 
-lifecycle {
-    ignore_changes = [statement_id]
-  }
+
 }
 
 resource "aws_lambda_permission" "api_gateway" {
