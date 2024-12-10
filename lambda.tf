@@ -33,18 +33,12 @@ resource "aws_iam_role_policy_attachment" "lambda_policy" {
   role       = aws_iam_role.lambda_exec.name
   policy_arn = "arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole"
 
-lifecycle {
-    ignore_changes = [statement_id]
-  }
 }
 
 resource "aws_api_gateway_rest_api" "api" {
   name        = "CPF Authorization API"
   description = "API for CPF authorization"
 
-lifecycle {
-    ignore_changes = [statement_id]
-  }
 }
 
 resource "aws_api_gateway_resource" "resource" {
