@@ -75,9 +75,7 @@ resource "aws_lambda_permission" "api_gateway" {
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_api_gateway_rest_api.api.execution_arn}/*/*"
 
-lifecycle {
-    ignore_changes = [statement_id]
-  }
+
 }
 
 resource "aws_api_gateway_deployment" "deployment" {
@@ -85,7 +83,4 @@ resource "aws_api_gateway_deployment" "deployment" {
   rest_api_id = aws_api_gateway_rest_api.api.id
   stage_name  = "v1"
 
-lifecycle {
-    ignore_changes = [statement_id]
-  }
 }
