@@ -28,6 +28,12 @@ jobs:
       - name: ZIP the lambda function
         run: zip -r lambda_function.zip lambda_function.py
 
+      # Install Terraform
+      - name: Install Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.5.7
+
       # Terraform: Initialize and Apply
       - name: Terraform Init and Apply
         working-directory: terraform
