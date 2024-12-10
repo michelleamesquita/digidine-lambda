@@ -9,6 +9,7 @@ resource "aws_lambda_function" "cpf_authorization" {
   handler          = "lambda_function.lambda_handler"
   runtime          = "python3.9"
   source_code_hash = filebase64sha256("lambda_function.zip")
+
 }
 
 resource "aws_iam_role" "lambda_exec" {
@@ -36,12 +37,20 @@ resource "aws_iam_role_policy_attachment" "lambda_policy" {
 resource "aws_api_gateway_rest_api" "api" {
   name        = "CPF Authorization API"
   description = "API for CPF authorization"
+
+lifecycle {
+    ignore_changes = [statement_id]
+  }
 }
 
 resource "aws_api_gateway_resource" "resource" {
   rest_api_id = aws_api_gateway_rest_api.api.id
   parent_id   = aws_api_gateway_rest_api.api.root_resource_id
   path_part   = "customers"
+
+lifecycle {
+    ignore_changes = [statement_id]
+  }
 }
 
 resource "aws_api_gateway_method" "method" {
@@ -49,6 +58,10 @@ resource "aws_api_gateway_method" "method" {
   resource_id   = aws_api_gateway_resource.resource.id
   http_method   = "POST"
   authorization = "NONE"
+
+lifecycle {
+    ignore_changes = [statement_id]
+  }
 }
 
 resource "aws_api_gateway_integration" "integration" {
@@ -58,6 +71,10 @@ resource "aws_api_gateway_integration" "integration" {
   type        = "AWS_PROXY"
   integration_http_method = "POST"
   uri         = aws_lambda_function.cpf_authorization.invoke_arn
+
+lifecycle {
+    ignore_changes = [statement_id]
+  }
 }
 
 resource "aws_lambda_permission" "api_gateway" {
@@ -66,10 +83,18 @@ resource "aws_lambda_permission" "api_gateway" {
   function_name = aws_lambda_function.cpf_authorization.function_name
   principal     = "apigateway.amazonaws.com"
   source_arn    = "${aws_api_gateway_rest_api.api.execution_arn}/*/*"
+
+lifecycle {
+    ignore_changes = [statement_id]
+  }
 }
 
 resource "aws_api_gateway_deployment" "deployment" {
   depends_on = [aws_api_gateway_integration.integration]
   rest_api_id = aws_api_gateway_rest_api.api.id
   stage_name  = "v1"
+
+lifecycle {
+    ignore_changes = [statement_id]
+  }
 }
