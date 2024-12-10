@@ -54,9 +54,7 @@ resource "aws_api_gateway_method" "method" {
   http_method   = "POST"
   authorization = "NONE"
 
-lifecycle {
-    ignore_changes = [statement_id]
-  }
+
 }
 
 resource "aws_api_gateway_integration" "integration" {
