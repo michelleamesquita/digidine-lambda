@@ -69,7 +69,7 @@ resource "aws_api_gateway_integration" "integration" {
 }
 
 resource "aws_lambda_permission" "api_gateway" {
-  statement_id  = "AllowAPIGatewayInvoke"
+  statement_id  = "AllowAPIGatewayInvoke-UniqueID"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.cpf_authorization.function_name
   principal     = "apigateway.amazonaws.com"
