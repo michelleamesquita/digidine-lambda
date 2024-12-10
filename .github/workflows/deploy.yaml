@@ -39,6 +39,32 @@ jobs:
         working-directory: .
         run: |
           terraform init
+
+          # Importar o API Gateway REST API
+          terraform import aws_api_gateway_rest_api.api 6o2h4rnv3m
+          
+          # Importar o recurso do API Gateway
+          terraform import aws_api_gateway_resource.resource 6o2h4rnv3m/eo3p6h
+          
+          # Importar o método do API Gateway
+          terraform import aws_api_gateway_method.method 6o2h4rnv3m/eo3p6h/POST
+          
+          # Importar a integração do API Gateway
+          terraform import aws_api_gateway_integration.integration agi-6o2h4rnv3m-eo3p6h-POST
+          
+          # Importar a implantação do API Gateway
+          terraform import aws_api_gateway_deployment.deployment 6o2h4rnv3m/ntjyy5
+          
+          # Importar a função IAM Role
           terraform import aws_iam_role.lambda_exec lambda_exec_role
+          
+          # Importar a política de função IAM
+          terraform import aws_iam_role_policy_attachment.lambda_policy lambda_exec_role/arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+          
+          # Importar a função Lambda
           terraform import aws_lambda_function.cpf_authorization CpfAuthorizationFunction
+          
+          # Importar a permissão Lambda
+          terraform import aws_lambda_permission.api_gateway AllowAPIGatewayInvoke
+          
           terraform apply -auto-approve
