@@ -27,10 +27,6 @@ resource "aws_iam_role" "lambda_exec" {
       },
     ]
   })
-
-lifecycle {
-    ignore_changes = [statement_id]
-  }
 }
 
 resource "aws_iam_role_policy_attachment" "lambda_policy" {
@@ -56,9 +52,6 @@ resource "aws_api_gateway_resource" "resource" {
   parent_id   = aws_api_gateway_rest_api.api.root_resource_id
   path_part   = "customers"
 
-lifecycle {
-    ignore_changes = [statement_id]
-  }
 }
 
 resource "aws_api_gateway_method" "method" {
