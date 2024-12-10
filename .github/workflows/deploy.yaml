@@ -39,4 +39,5 @@ jobs:
         working-directory: .
         run: |
           terraform init
+          terraform import aws_iam_role.lambda_exec arn:aws:iam::050451358673:role/lambda_exec_role
           terraform apply -auto-approve
